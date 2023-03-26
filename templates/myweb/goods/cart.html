@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <title>校园二货</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myweb/css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" type="text/css" href="{% static 'myweb/css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'myweb/css/file.css' %}" >
+    <link rel="stylesheet" type="text/css" href="{% static 'myweb/css/main.css' %}">
+
+</head>
+<body>
+    <div class="nav_head">
+        {%if request.session.user.username|default:'' != ''%}
+            <P>欢迎您， {{ request.session.user.username }}</P>
+            <p>{{request.session.user.nickname}}</p>
+            <button class="btn btn-default"><a href="{% url 'myweb_logout' %}" >退出</a></button>
+        {%else%}
+        <a class="btn btn-link"  href="{% url 'myweb_login' %}" >登录</a>
+        <a class="btn btn-link"  href="{% url 'myweb_reg' %}" >注册</a>
+        {%endif%}
+        <div class="nav dropdown">
+            <a class="btn btn-link"  href="{% url  'myweb_usercenter' %}" >| 用户中心</a>
+        </div>
+        <div class="nav">
+            <a class="btn btn-link"  href="/" >首页</a>
+        </div>
+        <div class="nav">
+            <a class="btn btn-link"  href="{% url 'myweb_cart' %}" >购物车</a>
+        </div>
+    </div>
+    <div class="title">
+        <img src="{% static 'myweb/img/title.png' %}">
+        <div class="second_title">
+            <div class="find">
+                <input type="text" class="form-control" id="search" >
+                <a type="button" class="btn btn-warning" id="search-button" href="javascript:void(0);" onclick="go_search()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </a>
+                <button type="button" class="btn btn-warning"><a href="{% url 'myweb_releaseGoods' %}">发布闲置</a></button>
+            </div>
+        </div>      
+    </div>
+    <!-- 返回最上开始 -->
+    <div class="back_to_top">
+        <a href="#"><img src="{%  static  'myweb/img/index-回到最上.png' %}"></a>
+    </div>
+
+
+    	<div class="search_bar clearfix">
+            <a href="/" class="logo fl"><img src="{% static 'myweb/img/title.png' %}"></a>
+        		
+       			
+        	</div>
+            <div class="total_count">|&nbsp;&nbsp;&nbsp;&nbsp;购物车&nbsp;&nbsp;&nbsp;&nbsp;全部商品<em>{{ total }}</em>件</div>
+            <ul class="cart_list_th clearfix">
+                <li class="col01">商品名称</li>
+                <li class="col02">商品类型</li>
+                <li class="col03">商品价格</li>
+                <li class="col04">数量</li>
+                <li class="col05">小计</li>
+                <li class="col06">操作</li>
+            </ul>
+            {% for cart in carts %}
+            <ul class="cart_list_td clearfix">
+                <li class="col01"><input type="checkbox" name="" checked></li>
+                <li class="col02"><img src="{{STATIC_URL}}myweb/goods/{{ cart.good.picture }}"></li>
+                <li class="col03">{{ cart.good.title }}</li>
+                <li class="col04">{{ cart.good.type }}</li>
+                <li class="col05">{{ cart.good.price }}元</li>
+                <li class="col06"><p >1</p></li>
+                <li class="col07">{{ cart.good.price }}元</li>
+                <li class="col08"><a href="{% url 'myweb_delcart' %}?title={{ cart.good.id }}">删除</a></li>
+            </ul>
+            {% endfor %}
+            <ul class="settlements">
+                <li class="col01"><input type="checkbox" name="" checked=""></li>
+                <li class="col02">全选</li>
+                <li class="col03">合计(不含运费)：<span>¥</span><em>{{ total_price }}</em><br>共计<b>{{ total }}</b>件商品</li>
+                <li class="col04"><a  href="{% url 'myweb_purchase' %}" onclick="dosubmit()" >去结算</a></li>
+            </ul>
+  
+    <script src="{% static 'myweb/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'myweb/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'myweb/js/file.js' %}"></script>
+    <script>
+        function dosubmit()
+        {
+            if($("ul").length == 2)
+            {
+                alert("购物车没有商品！");
+                return;
+            }
+        }
+    </script>
+</body>
+</html>

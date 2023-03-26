@@ -1,0 +1,45 @@
+{% extends 'myweb/user_base.html' %}
+
+
+{% block main_user %}
+{% load staticfiles %}
+
+ <table class="table">
+    <caption class="text-center">我的发布</caption>
+    <thead>   
+      <tr>
+        <th>序列</th>
+        <th>名称</th>
+        <th>类型</th>
+        <th>发布时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+
+        {% for g in good %}
+        <tr>
+            <td>{{ g.id }}</td>
+            <td>{{ g.title }}</td>
+            <td>{{ g.type }}</td>
+            <td>{{ g.create_at }}</td>
+            <td>
+             
+                <a type="button" class="btn btn-default"  href="{% url 'myweb_goodsdetails' %}?title={{ g.id }}">查看</a>
+                <a type="button" class="btn btn-default" href="{% url 'myweb_delgood' %}?id={{ g.id }}">删除</a>  
+                <a type="button" class="btn btn-default"  href="{% url 'myweb_uedit' %}?id={{ g.id }}">修改</a>
+            </td>
+        </tr>
+        {% endfor %}
+        
+    </tbody>
+</table> 
+<ul class="pagination">
+  <li><a href="{% url 'myweb_release_records' pIndex|add:-1 %}">&laquo;</a></li>
+  {% for p in plist %}
+  <li {% if p == pIndex %} class="active" {% endif  %}><a href="{% url 'myweb_release_records' p %}">{{p}}</a></li>
+  {% endfor %}
+  <li><a href="{% url 'myweb_release_records' pIndex|add:1 %}">&raquo;</a></li>
+</ul>
+
+{% endblock %}

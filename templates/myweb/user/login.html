@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <title>校园二货</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myweb/css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'myweb/css/file.css' %}" >
+    <link rel="stylesheet" href="{% static 'myweb/css/login.css' %}" >
+
+</head>
+<body>
+    <div class="nav_head">
+        {%if request.session.username|default:'' != ''%}
+            <P>欢迎您，</P>
+            <button class="btn btn-default"><a href="/user/logout" >退出</a></button>
+        {%else%}
+        <a class="btn btn-link"  href="{% url 'myweb_login' %}" >登录</a>
+        <a class="btn btn-link"  href="{% url 'myweb_reg' %}" >注册</a>
+        {%endif%}
+        <div class="nav dropdown">
+            <a class="btn btn-link"  href="{% url  'myweb_usercenter' %}" >| 用户中心</a>
+        </div>
+        <div class="nav">
+            <a class="btn btn-link"  href="/" >首页</a>
+        </div>
+    </div>
+    <div class="title">
+        <img src="{% static 'myweb/img/title.png' %}">
+        <div class="second_title">
+            <div class="find">
+                <input type="text" class="form-control" id="search" >
+                <a type="button" class="btn btn-warning" id="search-button" href="javascript:void(0);" onclick="go_search()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </a>
+                <button type="button" class="btn btn-warning"><a href="{% url 'myweb_releaseGoods' %}">发布闲置</a></button>
+            </div>
+        </div>      
+    </div>
+    <!-- 返回最上开始 -->
+    <div class="back_to_top">
+        <a href="#"><img src="{%  static  'myweb/img/index-回到最上.png' %}"></a>
+    </div>
+
+
+    <div class="log_in">
+        <p class="text-center">登录</p>
+        <form action="{% url 'myweb_dologin' %}" method="post">
+            {% csrf_token %}
+            <input type="text"  placeholder="请输入学号" name="number" class="user" id="number" value="{{ number }}" />
+
+            {% if info != '' %}
+                <div class="user_error">{{ info }}</div>
+            {% endif %}
+            <input type="password"  placeholder="请输入密码" name="password"  class="password" id="password" value="{{ password }}"/>
+
+            <a href="/user/reset_password">忘记密码？</a>
+            <input type="submit" class="btn btn-default" id="logon_btn" value="确认登录">
+        </form>
+    </div>
+    <!-- 
+    <div class="foot">
+        <img src="{% static 'myweb/img/title2.png' %}">
+        <p>来校园二货，你的闲置能换钱！</p>
+        <span>全国最大最活跃的校园闲置物品交换平台</span>
+    </div>
+    <address>
+   
+        Written by <a href="#">Resulte</a>.<br>
+            Visit us at:<br>
+            jxsf University<br>
+            tel：18××××××××69
+    </address>
+     foot -->
+    <script src="{% static 'myweb/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'myweb/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'myweb/js/file.js' %}"></script>
+</body>
+</html>

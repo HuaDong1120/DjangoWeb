@@ -1,0 +1,174 @@
+{% extends 'myweb/base.html' %}
+
+{% block main_title %}
+{% load staticfiles %}
+    <div class="new_nav_in">
+        <img src="{% static 'myweb/img/书籍.png' %}"/>
+        <a class="btn btn-link" href="#f1">闲置书籍</a>
+    </div>
+    <div class="new_nav_in">
+        <img src="{% static 'myweb/img/双色数码.png' %}"/>
+        <a class="btn btn-link" href="#f2">数码电子</a>
+    </div>
+    <div class="new_nav_in">
+        <img src="{% static 'myweb/img/衣服.png' %}"/>
+        <a class="btn btn-link" href="#f3">鞋服佩饰</a>
+    </div>
+    <div class="new_nav_in">
+        <img src="{% static 'myweb/img/日用.png' %}"/>
+        <a class="btn btn-link" href="#f4">日用物品</a>
+    </div>
+    <div class="new_nav_in">
+        <img src="{% static 'myweb/img/自行车.png' %}"/>
+        <a class="btn btn-link" href="#f5">出行交通</a>
+    </div>
+    <div class="new_nav_in">
+        <img src="{% static 'myweb/img/其他.png' %}"/>
+        <a class="btn btn-link" href="#f6">其他闲置</a>
+    </div>
+{% endblock %}
+
+{% block main_body %}
+<!-- 返回最上结束 -->
+<div class="second_content_left nav-1" id="f1">
+    <img src="{% static 'myweb/img/书籍.png' %}">
+    <a href="{% url 'myweb_booklist' %}">闲置书籍</a>
+    <a class="btn btn-link more_goods"  href="{% url 'myweb_booklist'%}" >更多</a>
+    <div class="third_content">
+
+        {% for book in books_list %}
+        <div class="goods">
+            <img src="static/myweb/goods/{{ book.picture }}" >
+        </div>
+        <div class="describe">
+            <img src="{% static 'myweb/img/商品1/箭头.png' %}" >
+            <a href="goods_details/?title={{ book.id }}">{{ book.title }}</a>
+            <img src="{% static 'myweb/img/商品1/金钱2.png' %}" class="rmb">
+            <span>{{ book.price }}</span>
+            <p>
+                {{ book.description }}
+            </p>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+<div class="second_content_right nav-1" id="f2">
+    <a class="btn btn-link more_goods"  href="{% url 'myweb_digitallist' %}" >更多</a>
+    <img src="{% static 'myweb/img/双色数码.png' %}">
+    <a href="{% url 'myweb_digitallist' %}">数码电子</a>
+
+    <div class="third_content">
+
+        {% for digital in digital_list %}
+        <div class="goods">
+            <img src="static/myweb/goods/{{ digital.picture }}" >
+        </div>
+        <div class="describe">
+            <img src="{% static 'myweb/img/商品1/箭头.png' %}" >
+            <a href="goods_details/?title={{ digital.id }}">{{ digital.title }}</a>
+            <img src="{% static 'myweb/img/商品1/金钱2.png' %}" class="rmb">
+            <span>{{ digital.price }}</span>
+            <p>
+                {{ digital.description }}
+            </p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>       
+<div class="second_content_left nav-1" id="f3">
+    <img src="{% static 'myweb/img/衣服.png' %}">
+    <a href="{% url 'myweb_clothlist'  %}">鞋服佩饰</a>
+    <a class="btn btn-link more_goods"  href="{% url 'myweb_clothlist' %}" >更多</a>
+    <div class="third_content">
+
+        {% for cloth in cloth_list %}
+        <div class="goods">
+            <img src="{% static 'myweb/goods' %}/{{ cloth.picture }}" >
+            "
+        </div>
+        <div class="describe">
+            <img src="{% static 'myweb/img/商品1/箭头.png' %}" >
+            <a href="goods_details/?title={{ cloth.id }}">{{ cloth.title }}</a>
+            <img src="{% static 'myweb/img/商品1/金钱2.png' %}" class="rmb">
+            <span>{{ cloth.price }}</span>
+            <p>
+                {{ cloth.description }}
+            </p>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+<div class="second_content_right nav-1" id="f4">
+    <a class="btn btn-link more_goods"  href="{% url 'myweb_dailylist' %}" >更多</a>
+    <img src="{% static 'myweb/img/日用.png' %}">
+    <a href="{% url 'myweb_dailylist' %}">日用物品</a>
+    <div class="third_content">
+
+        {% for daily in daily_list %}
+        <div class="goods">
+            <img src="static/myweb/goods/{{ daily.picture }}" >
+        </div>
+        <div class="describe">
+            <img src="{% static 'myweb/img/商品1/箭头.png' %}" >
+            <a href="goods_details/?title={{ daily.id }}">{{ daily.title }}</a>
+            <img src="{% static 'myweb/img/商品1/金钱2.png' %}" class="rmb">
+            <span>{{ daily.price }}</span>
+            <p>
+                {{ daily.description }}
+            </p>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+<div class="second_content_left nav-1" id="f5">
+    <img src="{% static 'myweb/img/自行车.png' %}">
+    <a href="{% url 'myweb_trafficlist' %}">出行交通</a>
+    <a class="btn btn-link more_goods"  href="{% url 'myweb_trafficlist' %}" >更多</a>
+    <div class="third_content">
+
+        {% for traffic in traffic_list %}
+        <div class="goods">
+            <img src="static/myweb/goods/{{ traffic.picture }}" >
+        </div>
+        <div class="describe">
+            <img src="{% static 'myweb/img/商品1/箭头.png' %}" >
+            <a  href="goods_details/?title={{ traffic.id }}">{{ traffic.title }}</a>
+            <img src="{% static 'myweb/img/商品1/金钱2.png' %}" class="rmb">
+            <span>{{ traffic.price }}</span>
+            <p>
+                {{ traffic.description }}
+            </p>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+<div class="second_content_right nav-1" id="f6" style="overflow: hidden;">
+    <a class="btn btn-link more_goods"  href="/other_list" >更多</a>
+    <img src="{% static 'myweb/img/其他.png' %}">
+    <a href="{% url 'myweb_otherlist' %}">其他闲置</a>
+    <div class="third_content">
+
+        {% for other in other_list %}
+        <div class="goods">
+            <img src="static/myweb/goods/{{ other.picture }}" >
+        </div>
+        <div class="describe">
+            <img src="{% static 'myweb/img/商品1/箭头.png' %}" >
+            <a   href="goods_details/?title={{ other.id }}">{{ other.title }}</a>
+            <img src="{% static 'myweb/img/商品1/金钱2.png' %}" class="rmb">
+            <span>{{ other.price }}</span>
+        <p>
+            {{ other.description }}
+        </p>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>               
+{% endblock %}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <title>校园二货</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myweb/css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'myweb/css/file.css' %}" >
+    <link rel="stylesheet" href="{% static 'myweb/css/head.css'%}" >
+    <link rel="stylesheet" href="{% static 'myweb/css/release_goods.css'%}" >
+
+</head>
+<body>
+    <div class="nav_head">
+        {%if request.session.user.username|default:'' != ''%}
+            <P>欢迎您，{{ request.session.user.username }}</P>
+            <p>{{request.session.user.nickname}}</p>
+            <button class="btn btn-default"><a href="{% url 'myweb_logout' %}" >退出</a></button>
+        {%else%}
+        <a class="btn btn-link"  href="{% url 'myweb_login' %}" >登录</a>
+        <a class="btn btn-link"  href="{% url 'myweb_reg' %}" >注册</a>
+        {%endif%}
+        <div class="nav dropdown">
+            <a class="btn btn-link"  href="{% url  'myweb_usercenter' %}" >| 用户中心</a>
+        </div>
+        <div class="nav">
+            <a class="btn btn-link"  href="/" >首页</a>
+        </div>
+        <div class="nav">
+            <a class="btn btn-link"  href="{% url 'myweb_cart' %}" >购物车</a>
+        </div>
+    </div>
+    <div class="title">
+        <img src="{% static 'myweb/img/title.png' %}">
+        <div class="second_title">
+            <div class="find">
+                <input type="text" class="form-control" id="search" >
+                <a type="button" class="btn btn-warning" id="search-button" href="javascript:void(0);" onclick="go_search()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </a>
+                <button type="button" class="btn btn-warning"><a href="{% url 'myweb_releaseGoods' %}">发布闲置</a></button>
+            </div>
+        </div>      
+    </div>
+    <!-- 返回最上开始 -->
+    <div class="back_to_top">
+        <a href="#"><img src="{%  static  'myweb/img/index-回到最上.png' %}"></a>
+    </div>
+
+
+    <div class="release">
+        <p class="text-center">修改物品信息</p>
+        <hr>
+        <form method="post" action="{% url 'myweb_douedit'  %}?id={{ good.id }}" method="post">
+            {% csrf_token %}
+            <ol>
+                <li>
+                    <p>商品名称</p>
+                    <input type="text" name="title" value="{{good.title}}"/>
+                </li>
+                <li>
+                    <p>商品分类</p>
+                    <select class="input-lg" name="type"  value="{{good.type}}">
+                        <option selected value="闲置书籍">闲置书籍</option>
+                        <option value="数码电子">数码电子</option>
+                        <option value="鞋服佩饰">鞋服佩饰</option>
+                        <option value="日用物品">日用物品</option>
+                        <option value="出行交通">出行交通</option>
+                        <option value="其他闲置">其他闲置</option>
+                    </select>
+                </li>
+                <li>
+                    <p>期望成交价</p>
+                    <input type="text" name="price" value="{{good.price}}"/>
+                </li>
+                <li>
+                    <p>交易地点</p>
+                    <input type="text" name="address" value="{{good.address}}"/>
+                </li>
+                
+                <li>
+                    <P>详细描述</P>
+                    <textarea rows="15" name="description" >{{good.description }}</textarea>
+                </li>
+            </ol>
+            <input type="submit" class="tijiao btn btn-default" style="width: 100px" value="提交">
+        </form>
+    </div>
+    <!-- 
+    <div class="foot">
+        <img src="{% static 'myweb/img/title2.png' %}">
+        <p>来校园二货，你的闲置能换钱！</p>
+        <span>全国最大最活跃的校园闲置物品交换平台</span>
+    </div>
+    <address>
+   
+        Written by <a href="#">Resulte</a>.<br>
+            Visit us at:<br>
+            jxsf University<br>
+            tel：18××××××××69
+    </address>
+     foot -->
+    <script src="{% static 'myweb/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'myweb/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'myweb/js/file.js' %}"></script>
+    
+</body>
+</html>

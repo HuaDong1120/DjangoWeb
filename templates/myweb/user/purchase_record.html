@@ -1,0 +1,39 @@
+{% extends 'myweb/user_base.html' %}
+
+
+{% block main_user %}
+{% load staticfiles %}
+
+ <table class="table">
+    <caption class="text-center">我的购买</caption>
+    <thead>   
+      <tr>
+        <th>序列</th>
+        <th>名称</th>
+        <th>类型</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+
+        {% for g in good %}
+        <tr>
+            <td>{{ g.id }}</td>
+            <td>{{ g.title }}</td>
+            <td>{{ g.type }}</td>
+            
+            
+        </tr>
+        {% endfor %}
+        
+    </tbody>
+</table> 
+<ul class="pagination">
+  <li><a href="{% url 'myweb_release_records' pIndex|add:-1 %}">&laquo;</a></li>
+  {% for p in plist %}
+  <li {% if p == pIndex %} class="active" {% endif  %}><a href="{% url 'myweb_release_records' p %}">{{p}}</a></li>
+  {% endfor %}
+  <li><a href="{% url 'myweb_release_records' pIndex|add:1 %}">&raquo;</a></li>
+</ul>
+
+{% endblock %}
